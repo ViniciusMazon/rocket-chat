@@ -17,7 +17,22 @@
   </form>
 
   <script type="text/javascript">
-    var scoket = io('http://localhost:3000');
+    var socket = io('http://localhost:3000');
+
+    $('#chat').submit(function(event) {
+      event.preventDefault();
+      var author = $('input[name=username]').val();
+      var message = $('input[name=message]').val();
+
+      if(author.length && message.length) {
+        var messageObject = {
+          author: author,
+          message: message,
+        };
+
+        socket.emit('sendMessage', messageObject);
+      }
+    });
   </script>
 </body>
 </html>
